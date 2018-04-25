@@ -17,6 +17,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^update/', 'cms.views.update_barrapunto'),
     url(r'^$', 'cms.views.barra'),
     url(r'^(.*)$', 'cms.views.otro'),
 ]
