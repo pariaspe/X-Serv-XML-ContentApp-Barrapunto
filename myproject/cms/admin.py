@@ -3,3 +3,4 @@ from .models import Pages
 
 # Register your models here.
 admin.site.register(Pages)
+admin.site.register(Barrapunto)

@@ -6,3 +6,9 @@ class Pages(models.Model):
     page = models.TextField()
     def __str__(self):
         return self.name
+
+class Barrapunto(models.Model):
+    title = models.TextField(unique=True)
+    link = models.URLField()
+    def __str__(self):
+        return self.title
