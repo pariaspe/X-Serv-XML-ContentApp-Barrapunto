@@ -10,6 +10,8 @@ from urllib import request, error
 from xml.sax.handler import ContentHandler
 # Create your views here.
 
+import parser
+
 def normalize_whitespace(text):
     "Remove redundant whitespace from a string"
     return ' '.join(text.split())
