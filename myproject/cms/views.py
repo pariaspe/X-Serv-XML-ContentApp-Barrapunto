@@ -55,9 +55,9 @@ class CounterHandler(ContentHandler):
 
 def print_barrapunto():
     noticias = Barrapunto.objects.all()
-    lista = '<ul>'
+    lista = 'Lista de noticias:<ul>'
     for noticia in noticias:
-        lista += "<br/><li><a href='" + noticia.link + "'>" + noticia.title + "</a></li>"
+        lista += '<li><a href="' + noticia.link + '">' + noticia.title + '</a></li>'
     lista += '</ul>'
     return lista
 
@@ -79,16 +79,18 @@ def update_barrapunto(_):
     return HttpResponse(print_barrapunto())
 
 def barra(request):
+    answer = '<h1>Sistema de gestión de contenidos</h1>'
     pages = Pages.objects.all()
-    lista = '<ul>'
+    lista = 'Lista de paginas:<ul>'
     for page in pages:
-        lista += '<li>' + page.name + '</li>'
+        lista += '<li><a href="' + page.name + '">' + page.name + '</a></li>'
     lista += '</ul>'
-    return HttpResponse(lista + print_barrapunto())
+    return HttpResponse(answer + lista + print_barrapunto())
 
 def otro(request, recurso):
     try:
+        answer = '<h1>Pagina: ' + recurso + '</h1>'
         page = Pages.objects.get(name=recurso)
-        return HttpResponse(page.page + print_barrapunto())
+        return HttpResponse(answer + page.page + '<br/><br/>' + print_barrapunto())
     except Pages.DoesNotExist:
         return HttpResponseNotFound('Pagina no guardada')
