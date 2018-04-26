@@ -10,48 +10,7 @@ from urllib import request, error
 from xml.sax.handler import ContentHandler
 # Create your views here.
 
-import parser
-
-def normalize_whitespace(text):
-    "Remove redundant whitespace from a string"
-    return ' '.join(text.split())
-
-class CounterHandler(ContentHandler):
-
-    def __init__ (self):
-        self.inContent = 0
-        self.theContent = ""
-        self.inItem = False
-        self.titles = []
-        self.links = []
-
-    def startElement (self, name, attrs):
-        if name == 'item':
-            self.inItem = True
-        elif self.inItem:
-            if name == 'title':
-                self.inContent = 1
-            elif name == 'link':
-                self.inContent = 1
-
-    def endElement (self, name):
-        if self.inContent:
-            self.theContent = normalize_whitespace(self.theContent)
-        if name == 'item':
-            self.inItem = False
-            # sobra?
-        if self.inItem:
-            if name == 'title':
-                self.titles.append(self.theContent)
-            elif name == 'link':
-                self.links.append(self.theContent)
-        if self.inContent:
-            self.inContent = 0
-            self.theContent = ""
-
-    def characters (self, chars):
-        if self.inContent:
-            self.theContent = self.theContent + chars
+import cms.parser
 
 def print_barrapunto():
     noticias = Barrapunto.objects.all()
@@ -63,7 +22,7 @@ def print_barrapunto():
 
 def update_barrapunto(_):
     BarrapuntoParser = make_parser()
-    BarrapuntoHandler = CounterHandler()
+    BarrapuntoHandler = cms.parser.CounterHandler()
     BarrapuntoParser.setContentHandler(BarrapuntoHandler)
 
     xmlFile = request.urlopen('http://barrapunto.com/index.rss')
